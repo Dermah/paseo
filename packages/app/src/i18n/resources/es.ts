@@ -2675,6 +2675,10 @@ export const es: TranslationResources = {
         contentSize: "Tamaño de contenido",
         contentSizeHint: "Se usa en el texto del chat y el Markdown renderizado",
         contentSizeAccessibility: "Tamaño de fuente de contenido",
+        contentLineHeight: "Interlineado del contenido",
+        contentLineHeightHint:
+          "Espaciado entre líneas del texto del chat y el Markdown renderizado",
+        contentLineHeightAccessibility: "Interlineado del contenido",
         codeFont: "Fuente de código",
         codeFontHint:
           "Se utiliza en código, diferencias y salida del terminal. Déjelo vacío para el valor predeterminado del sistema.",

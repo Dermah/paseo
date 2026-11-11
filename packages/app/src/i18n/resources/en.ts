@@ -2743,6 +2743,9 @@ export const en = {
         contentSize: "Content size",
         contentSizeHint: "Used for chat text and rendered Markdown",
         contentSizeAccessibility: "Content font size",
+        contentLineHeight: "Content line height",
+        contentLineHeightHint: "Line spacing for chat text and rendered Markdown",
+        contentLineHeightAccessibility: "Content line height",
         codeFont: "Code font",
         codeFontHint:
           "Used in code, diffs, and the terminal output. Leave empty for the system default",

@@ -1082,6 +1082,16 @@ it("makes the web Markdown container selectable in Safari as well as unprefixed 
   });
 });
 
+it("sets the paragraph line height from the content line-height token", () => {
+  const theme = {
+    ...darkTheme,
+    fontSize: { ...darkTheme.fontSize, content: 16 },
+    lineHeight: { ...darkTheme.lineHeight, content: 1.75 },
+  };
+  const { markdownStyle } = createMarkdownStyles(theme, { blockGap: 16 });
+  expect(markdownStyle.paragraph?.lineHeight).toBe(28);
+});
+
 it.each([false, true])(
   "scales inline code from theme tokens with its surrounding block (compact: %s)",
   (compact) => {

@@ -589,7 +589,8 @@ export const FONT_SIZE = {
 } as const;
 
 export const LINE_HEIGHT = {
-  diff: 22,
+  diff: 22, // px
+  content: 1.4, // multiplier of fontSize.content
 } as const;
 
 export const ICON_SIZE = {

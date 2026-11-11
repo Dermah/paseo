@@ -2655,6 +2655,10 @@ export const ptBR: TranslationResources = {
         contentSize: "Tamanho do conteúdo",
         contentSizeHint: "Usado no texto do chat e no Markdown renderizado",
         contentSizeAccessibility: "Tamanho da fonte do conteúdo",
+        contentLineHeight: "Altura da linha do conteúdo",
+        contentLineHeightHint:
+          "Espaçamento entre linhas do texto do chat e do Markdown renderizado",
+        contentLineHeightAccessibility: "Altura da linha do conteúdo",
         codeFont: "Fonte de código",
         codeFontHint:
           "Usada em código, diffs e saída do terminal. Deixe vazio para usar o padrão do sistema",

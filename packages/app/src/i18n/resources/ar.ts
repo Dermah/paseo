@@ -2652,6 +2652,9 @@ export const ar: TranslationResources = {
         contentSize: "حجم المحتوى",
         contentSizeHint: "يُستخدم لنص الدردشة وملفات Markdown المعروضة",
         contentSizeAccessibility: "حجم خط المحتوى",
+        contentLineHeight: "ارتفاع سطر المحتوى",
+        contentLineHeightHint: "تباعد الأسطر لنص الدردشة وملفات Markdown المعروضة",
+        contentLineHeightAccessibility: "ارتفاع سطر المحتوى",
         codeFont: "خط الكود",
         codeFontHint:
           "تستخدم في الكود والاختلافات والمخرجات الطرفية. اتركه فارغًا للإعداد الافتراضي للنظام",

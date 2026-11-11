@@ -36,7 +36,7 @@ interface FakeTheme {
     "3xl": number;
     "4xl": number;
   };
-  lineHeight: { diff: number };
+  lineHeight: { diff: number; content: number };
   contentMaxWidth: number;
   colors: { foreground: string; syntax: Record<string, string> };
 }
@@ -56,7 +56,7 @@ function makeFakeTheme(): FakeTheme {
       "3xl": 22,
       "4xl": 26,
     },
-    lineHeight: { diff: 22 },
+    lineHeight: { diff: 22, content: 1.4 },
     contentMaxWidth: 820,
     colors: { foreground: "#fff", syntax: {} },
   };
@@ -68,6 +68,7 @@ function makeInput(overrides: Partial<AppearanceInput> = {}): AppearanceInput {
     monoFontFamily: "",
     uiBaseFontSize: 14,
     contentFontSize: 15,
+    contentLineHeight: 140,
     codeFontSize: 12,
     contentMaxWidth: 820,
     syntaxTheme: "one",
@@ -187,6 +188,12 @@ describe("applyAppearance", () => {
     applyAppearance(makeInput({ codeFontSize: 18 }));
 
     expect(runCapturedUpdater().lineHeight.diff).toBe(Math.round(18 * 1.5)); // 27
+  });
+
+  it("sets lineHeight.content to the content line height as a ratio", () => {
+    applyAppearance(makeInput({ contentLineHeight: 175 }));
+
+    expect(runCapturedUpdater().lineHeight.content).toBe(1.75);
   });
 
   it("swaps colors.syntax to the resolved palette for the named theme", () => {

@@ -68,6 +68,10 @@ export function defaultContentFontSize(native: boolean): number {
 export const DEFAULT_CONTENT_FONT_SIZE = defaultContentFontSize(isNative);
 export const MIN_CONTENT_FONT_SIZE = 10;
 export const MAX_CONTENT_FONT_SIZE = 21;
+// Content line height as a percent of the content font size.
+export const DEFAULT_CONTENT_LINE_HEIGHT = 140;
+export const MIN_CONTENT_LINE_HEIGHT = 120;
+export const MAX_CONTENT_LINE_HEIGHT = 220;
 export const DEFAULT_CODE_FONT_SIZE = 12; // == FONT_SIZE.code
 export const MIN_CODE_FONT_SIZE = 9;
 export const MAX_CODE_FONT_SIZE = 22; // line-height 1.5×22=33 stays safe
@@ -88,6 +92,7 @@ export interface AppSettings {
   monoFontFamily: string; // "" = platform default mono stack
   uiBaseFontSize: number; // clamped px, platform default 14 or 15
   contentFontSize: number; // clamped px, platform default 15 or 16
+  contentLineHeight: number; // clamped percent of contentFontSize, default 140
   codeFontSize: number; // clamped px, default 12
   /** Max width of chat and markdown content in px; null follows the current default. */
   contentMaxWidth: number | null;
@@ -149,6 +154,7 @@ export const DEFAULT_CLIENT_SETTINGS: AppSettings = {
   monoFontFamily: "",
   uiBaseFontSize: DEFAULT_UI_BASE_FONT_SIZE,
   contentFontSize: DEFAULT_CONTENT_FONT_SIZE,
+  contentLineHeight: DEFAULT_CONTENT_LINE_HEIGHT,
   codeFontSize: DEFAULT_CODE_FONT_SIZE,
   contentMaxWidth: null,
   syntaxTheme: "one",
@@ -236,6 +242,9 @@ const StoredAppSettingsSchema = z
     contentFontSize: clampedNumber(MIN_CONTENT_FONT_SIZE, MAX_CONTENT_FONT_SIZE)
       .optional()
       .catch(DEFAULT_CONTENT_FONT_SIZE),
+    contentLineHeight: clampedNumber(MIN_CONTENT_LINE_HEIGHT, MAX_CONTENT_LINE_HEIGHT).catch(
+      DEFAULT_CONTENT_LINE_HEIGHT,
+    ),
     // COMPAT(uiFontSizeScale): replaced by the literal base size in v0.4, remove after 2027-08-17.
     uiFontSize: clampedNumber(11, 24).optional().catch(undefined),
     codeFontSize: clampedNumber(MIN_CODE_FONT_SIZE, MAX_CODE_FONT_SIZE).catch(

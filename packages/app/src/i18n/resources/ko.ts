@@ -2631,6 +2631,9 @@ export const ko: TranslationResources = {
         contentSize: "콘텐츠 크기",
         contentSizeHint: "채팅 텍스트와 렌더링된 Markdown에 사용됩니다",
         contentSizeAccessibility: "콘텐츠 글꼴 크기",
+        contentLineHeight: "콘텐츠 줄 높이",
+        contentLineHeightHint: "채팅 텍스트와 렌더링된 Markdown의 줄 간격",
+        contentLineHeightAccessibility: "콘텐츠 줄 높이",
         codeFont: "코드 글꼴",
         codeFontHint:
           "코드, diff, 터미널 출력에 사용됩니다. 시스템 기본값을 사용하려면 비워 두세요",

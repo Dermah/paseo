@@ -2641,6 +2641,9 @@ export const ja: TranslationResources = {
         contentSize: "コンテンツサイズ",
         contentSizeHint: "チャットテキストとレンダリングされた Markdown に使用されます",
         contentSizeAccessibility: "コンテンツのフォントサイズ",
+        contentLineHeight: "コンテンツの行の高さ",
+        contentLineHeightHint: "チャットテキストとレンダリングされた Markdown の行間",
+        contentLineHeightAccessibility: "コンテンツの行の高さ",
         codeFont: "コードフォント",
         codeFontHint:
           "コード、差分、ターミナル出力で使用されます。システムデフォルトにするには空のままにしてください",

@@ -2676,6 +2676,10 @@ export const fr: TranslationResources = {
         contentSize: "Taille du contenu",
         contentSizeHint: "Utilisée pour le texte de la discussion et le Markdown rendu",
         contentSizeAccessibility: "Taille de police du contenu",
+        contentLineHeight: "Interligne du contenu",
+        contentLineHeightHint:
+          "Espacement des lignes du texte de la discussion et du Markdown rendu",
+        contentLineHeightAccessibility: "Interligne du contenu",
         codeFont: "Police du code",
         codeFontHint:
           "Utilisée pour le code, les diffs et la sortie du terminal. Laissez vide pour utiliser la police par défaut du système",

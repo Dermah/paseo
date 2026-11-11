@@ -7,6 +7,7 @@ import {
   DEFAULT_CLIENT_SETTINGS,
   DEFAULT_CODE_FONT_SIZE,
   DEFAULT_CONTENT_FONT_SIZE,
+  DEFAULT_CONTENT_LINE_HEIGHT,
   DEFAULT_UI_BASE_FONT_SIZE,
   defaultUiBaseFontSize,
   defaultContentFontSize,
@@ -936,6 +937,23 @@ describe("appearance settings", () => {
     });
     expect((await loadAppSettingsFromStorage(bogus)).contentFontSize).toBe(
       DEFAULT_CONTENT_FONT_SIZE,
+    );
+  });
+
+  it("defaults and clamps the content line height", async () => {
+    const load = (stored: object) =>
+      loadAppSettingsFromStorage(
+        makeDeps({
+          storage: createInMemoryKeyValueStorage({ [APP_SETTINGS_KEY]: JSON.stringify(stored) }),
+        }),
+      );
+
+    expect((await load({})).contentLineHeight).toBe(DEFAULT_CONTENT_LINE_HEIGHT);
+    expect((await load({ contentLineHeight: 175 })).contentLineHeight).toBe(175);
+    expect((await load({ contentLineHeight: 999 })).contentLineHeight).toBe(220);
+    expect((await load({ contentLineHeight: 50 })).contentLineHeight).toBe(120);
+    expect((await load({ contentLineHeight: "abc" })).contentLineHeight).toBe(
+      DEFAULT_CONTENT_LINE_HEIGHT,
     );
   });
 

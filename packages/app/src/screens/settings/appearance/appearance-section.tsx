@@ -20,9 +20,11 @@ import {
 import {
   MAX_CODE_FONT_SIZE,
   MAX_CONTENT_FONT_SIZE,
+  MAX_CONTENT_LINE_HEIGHT,
   MAX_UI_BASE_FONT_SIZE,
   MIN_CODE_FONT_SIZE,
   MIN_CONTENT_FONT_SIZE,
+  MIN_CONTENT_LINE_HEIGHT,
   MIN_UI_BASE_FONT_SIZE,
   parseClampedFontSize,
   parseContentMaxWidth,
@@ -122,6 +124,7 @@ interface FontSizeRowProps {
   hint: string;
   accessibilityLabel: string;
   draft: string;
+  unit?: string;
   withBorder?: boolean;
   onChangeDraft: (value: string) => void;
   onCommit: () => void;
@@ -132,6 +135,7 @@ function FontSizeRow({
   hint,
   accessibilityLabel,
   draft,
+  unit = "px",
   withBorder = true,
   onChangeDraft,
   onCommit,
@@ -154,7 +158,7 @@ function FontSizeRow({
           style={styles.sizeInput}
           accessibilityLabel={accessibilityLabel}
         />
-        <Text style={styles.unit}>px</Text>
+        <Text style={styles.unit}>{unit}</Text>
       </View>
     </View>
   );
@@ -309,6 +313,9 @@ export function AppearanceSection() {
   const [monoFontDraft, setMonoFontDraft] = useState(settings.monoFontFamily);
   const [uiBaseSizeDraft, setUiBaseSizeDraft] = useState(String(settings.uiBaseFontSize));
   const [contentSizeDraft, setContentSizeDraft] = useState(String(settings.contentFontSize));
+  const [contentLineHeightDraft, setContentLineHeightDraft] = useState(
+    String(settings.contentLineHeight),
+  );
   const [codeSizeDraft, setCodeSizeDraft] = useState(String(settings.codeFontSize));
 
   // Resync numeric drafts when the committed value changes elsewhere.
@@ -318,6 +325,9 @@ export function AppearanceSection() {
   useEffect(() => {
     setContentSizeDraft(String(settings.contentFontSize));
   }, [settings.contentFontSize]);
+  useEffect(() => {
+    setContentLineHeightDraft(String(settings.contentLineHeight));
+  }, [settings.contentLineHeight]);
   useEffect(() => {
     setCodeSizeDraft(String(settings.codeFontSize));
   }, [settings.codeFontSize]);
@@ -380,6 +390,10 @@ export function AppearanceSection() {
     setContentSizeDraft(value.replace(/[^\d]/g, ""));
   }, []);
 
+  const handleContentLineHeightChange = useCallback((value: string) => {
+    setContentLineHeightDraft(value.replace(/[^\d]/g, ""));
+  }, []);
+
   const commitUiBaseSize = useCallback(() => {
     const parsed = parseClampedFontSize(uiBaseSizeDraft, {
       min: MIN_UI_BASE_FONT_SIZE,
@@ -416,16 +430,37 @@ export function AppearanceSection() {
     }
   }, [contentSizeDraft, settings.contentFontSize, updateSettings]);
 
+  const commitContentLineHeight = useCallback(() => {
+    const parsed = parseClampedFontSize(contentLineHeightDraft, {
+      min: MIN_CONTENT_LINE_HEIGHT,
+      max: MAX_CONTENT_LINE_HEIGHT,
+    });
+    const next = parsed ?? settings.contentLineHeight;
+    setContentLineHeightDraft(String(next));
+    if (next !== settings.contentLineHeight) {
+      void updateSettings({ contentLineHeight: next });
+    }
+  }, [contentLineHeightDraft, settings.contentLineHeight, updateSettings]);
+
   // Live-while-typing: the in-progress drafts drive the preview without
   // committing to the global theme. Empty/invalid fields fall back to the
   // theme value inside the preview.
   const previewOverrides = useMemo(
     () => ({
-      contentFontSize: sizeDraftToOverride(contentSizeDraft),
+      // Content size and line height style the same text, so each falls back to the committed value.
+      contentFontSize: sizeDraftToOverride(contentSizeDraft) ?? settings.contentFontSize,
+      contentLineHeight: sizeDraftToOverride(contentLineHeightDraft) ?? settings.contentLineHeight,
       monoFontFamily: monoFontDraft,
       codeFontSize: sizeDraftToOverride(codeSizeDraft),
     }),
-    [codeSizeDraft, contentSizeDraft, monoFontDraft],
+    [
+      codeSizeDraft,
+      contentLineHeightDraft,
+      contentSizeDraft,
+      monoFontDraft,
+      settings.contentFontSize,
+      settings.contentLineHeight,
+    ],
   );
 
   return (
@@ -466,6 +501,15 @@ export function AppearanceSection() {
             draft={contentSizeDraft}
             onChangeDraft={handleContentSizeChange}
             onCommit={commitContentSize}
+          />
+          <FontSizeRow
+            title={t("settings.appearance.fonts.contentLineHeight")}
+            hint={t("settings.appearance.fonts.contentLineHeightHint")}
+            accessibilityLabel={t("settings.appearance.fonts.contentLineHeightAccessibility")}
+            draft={contentLineHeightDraft}
+            unit="%"
+            onChangeDraft={handleContentLineHeightChange}
+            onCommit={commitContentLineHeight}
           />
           <FontFamilyRow
             title={t("settings.appearance.fonts.codeFont")}

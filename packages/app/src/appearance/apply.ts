@@ -16,6 +16,7 @@ export interface AppearanceInput {
   monoFontFamily: string; // "" -> default stack
   uiBaseFontSize: number; // already clamped
   contentFontSize: number; // already clamped
+  contentLineHeight: number; // already clamped percent of the content size
   codeFontSize: number; // already clamped
   contentMaxWidth: number; // already clamped, default resolved
   syntaxTheme: SyntaxThemeId;
@@ -80,7 +81,11 @@ export function applyAppearance(input: AppearanceInput): void {
         input.contentFontSize,
         input.codeFontSize,
       );
-      const lineHeight = { ...t.lineHeight, diff: diffLineHeight };
+      const lineHeight = {
+        ...t.lineHeight,
+        diff: diffLineHeight,
+        content: input.contentLineHeight / 100,
+      };
       if (t.colorScheme === "light") {
         return {
           ...t,
